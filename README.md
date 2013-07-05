@@ -80,7 +80,7 @@ We recommend addressing load-order dependencies by designing our apps with it in
 
 1. Limit yourself to a single "main" method in your application. Typically, that means only one callback that fires when the document is ready (e.g. `jQuery(function(){ /* a.k.a. right here */ })`).
 
-2. Design code that defers its dependencies until someone invokes it. This will typically only fail you when you're extending another type at definition-time (e.g. `class Foo extends Bar`)
+2. Design code that waits until itself has been invoked before `use`'ing its dependencies. This will typically only fail you when you're extending another type at definition-time (e.g. `class Foo extends Bar`)
 
 3. Adjust script load order at the directory level, as if each directory represented a self-contained package. To illustrate, suppose your application's views in `views/app` extend from general views defined in `views/super_views`, then consider adjusting the load order with globs like `['views/super_views/**/*', '**/*']`. This directory-level-globbing approach is handy, because it will typically only fail when your app commits the age-old sin of [package tangling](http://stackoverflow.com/questions/15321702/what-does-package-tangle-index-data-indicate-in-sonar).
 
