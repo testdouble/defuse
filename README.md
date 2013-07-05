@@ -69,3 +69,18 @@ def 'app/views/ItemList', class ItemList extends Backbone.View
 This will ensure that objects created via `new ItemList` will be named ItemList in runtime tooling.
 
 That's sort of lame, but if anyone can find a workaround for named functions, please show us by [filing an issue](https://github.com/testdouble/defuse/issues)!
+
+### managing load order
+
+Defuse doesn't do anything to try to prevent you from writing load-order-dependent code. If you attempt to `use()` a name before it's been defined, you'll see an error.
+
+More heavyweight module libraries try to solve this entirely, but at the cost of additional implementation complexity (some of which leaks onto users in the form of increased configuration).
+
+We recommend addressing load-order dependencies by designing our apps with it in mind, including these rules-of-thumb:
+
+1. Limit yourself to a single "main" method in your application. Typically, that means only one callback that fires when the document is ready (e.g. `jQuery(function(){ /* a.k.a. right here */ })`).
+
+2. Design code that defers its dependencies until someone invokes it. This will typically only fail you when you're extending another type at definition-time (e.g. `class Foo extends Bar`)
+
+3. Adjust script load order at the directory level, as if each directory represented a self-contained package. To illustrate, suppose your application's views in `views/app` extend from general views defined in `views/super_views`, then consider adjusting the load order with globs like `['views/super_views/**/*', '**/*']`. This directory-level-globbing approach is handy, because it will typically only fail when your app commits the age-old sin of [package tangling](http://stackoverflow.com/questions/15321702/what-does-package-tangle-index-data-indicate-in-sonar).
+
