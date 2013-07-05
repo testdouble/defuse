@@ -6,6 +6,8 @@ defuse is a nifty little JavaScript library for folks who agree that it makes se
 
 Defuse intends to give you 80% of the benefit of a module-y approach to code organization at 20% of the cost.
 
+[Download defuse.js here](https://github.com/testdouble/defuse/releases)
+
 [Note: all examples follow in CoffeeScript, which means that all variable identifiers are implied to be file-local. If you don't use CoffeeScript, you should be using [IIFE](http://benalman.com/news/2010/11/immediately-invoked-function-expression/)'s to achieve the same effect.]
 
 ## def()
