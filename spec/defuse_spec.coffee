@@ -19,8 +19,6 @@ describe "defuse", ->
       Given -> @address = 'foo/bar/biz/baz/boo'
       Then -> expect(@result).toEqual(@value)
 
-    afterEach -> @subject.reset()
-
   describe ".noConflict", ->
     Given -> @defuseLib = window.defuse
     When -> @result = @subject.noConflict()

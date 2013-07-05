@@ -17,9 +17,6 @@ class Defuse
       parent[child]
     , @namespace()
 
-  reset: =>
-    @_namespace = undefined
-
   noConflict: ->
     _(window).extend(originals)
     return this
