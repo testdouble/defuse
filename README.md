@@ -19,7 +19,7 @@ def 'app/models/CoffeeTable',
     # ...
 ```
 
-You may also define the namespace with back-slashes (e.g. `def 'app\models\CoffeeTable', ...`) or periods (e.g. `def 'app.models.CoffeeTable', ...`).
+You may also define the namespace with back-slashes (e.g. `def 'app\models\CoffeeTable', ...`) or periods (e.g. `def 'app.models.CoffeeTable', ...`). For more information on how naming conflicts are handled, check out the [extend.js](https://github.com/searls/extend.js) project, which is what defuse depends on for this behavior.
 
 ## use()
 
