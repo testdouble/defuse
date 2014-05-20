@@ -1,6 +1,6 @@
 {
   "name": "defuse",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An API to define and use JavaScript in a module-y way. And nothing else.",
   "homepage": "https://github.com/testdouble/defuse",
   "author": {
