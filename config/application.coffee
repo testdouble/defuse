@@ -7,4 +7,9 @@
 #
 
 module.exports = (lineman) ->
-  {}
+  concat:
+    uncompressedDist:
+      src: [
+        "<%= files.js.app %>"
+        "<%= files.coffee.generated %>"
+      ]
