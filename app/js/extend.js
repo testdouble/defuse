@@ -1,29 +1,28 @@
-/* extend - 0.0.3
+/* extend - 0.2.0
  * a teeny-tiny JavaScript namespacing script 
  * https://github.com/searls/extend.js
  */
 (function() {
-  var isExtensible, makeExtender, originalExtend, resolveAncestors, verifyDistinctness;
+  var makeExtender, originalExtend, preserveLeaf, resolveAncestors, root, _,
+    __slice = [].slice;
+
+  root = this;
+
+  _ = root._;
 
   makeExtender = function(top) {
-    return function(name, value) {
-      var ancestors, leaf, parent;
-
+    return function() {
+      var ancestors, leaf, name, parent, values, _ref;
+      name = arguments[0], values = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
       ancestors = name.split(/[./\\]/g);
       leaf = ancestors.pop();
       parent = resolveAncestors(ancestors, top);
-      verifyDistinctness(name, value, parent[leaf]);
-      if (isExtensible(parent[leaf], value)) {
-        _(parent[leaf]).extend(value);
-      } else if (arguments.length > 1) {
-        parent[leaf] = value;
+      if (preserveLeaf(parent[leaf])) {
+        return (_ref = _(parent[leaf])).extend.apply(_ref, values);
+      } else {
+        return parent[leaf] = _.extend.apply(_, values);
       }
-      return parent[leaf];
     };
-  };
-
-  isExtensible = function(existing, value) {
-    return (existing != null) && !_(value).isFunction() && !_(existing).isFunction();
   };
 
   resolveAncestors = function(ancestors, top) {
@@ -32,25 +31,28 @@
     }, top);
   };
 
-  verifyDistinctness = function(name, value, existing) {
-    if (_(existing).isFunction() && (value != null) && existing !== value) {
-      throw "Cannot define a new function \"" + name + "\", because one is already defined.";
-    }
+  preserveLeaf = function(leaf) {
+    return _(leaf).isFunction() || !_(leaf).isEmpty();
   };
 
-  originalExtend = window.extend;
+  originalExtend = root.extend;
 
-  window.extend = makeExtender(window);
+  root.extend = makeExtender(window);
 
-  window.extend.myNamespace = function(namespace) {
+  root.extend.myNamespace = function(namespace) {
     return namespace.extend = makeExtender(namespace);
   };
 
-  window.extend.noConflict = function() {
+  root.extend.noConflict = function(dependencies) {
     var ourExtend;
-
-    ourExtend = window.extend;
-    window.extend = originalExtend;
+    if (dependencies == null) {
+      dependencies = {};
+    }
+    if (dependencies._ != null) {
+      _ = dependencies._;
+    }
+    ourExtend = root.extend;
+    root.extend = originalExtend;
     return ourExtend;
   };
 
