@@ -1,40 +1,36 @@
 root = this
 
 originals =
-  defuse: window.defuse
-  def: window.def
-  use: window.use
+  defuse: root.defuse
+  def: root.def
+  use: root.use
+
+_ = root._
+extend = root.extend.noConflict({_}) #<-- bundled, therefore noConflict'd
+extend.myNamespace(hiddenNamespace = {})
 
 class Defuse
 
   DELIMETER: /[./\\]/g
 
-  def: (namespace, value) =>
-    @extend(namespace, value)
+  def: (name, value) =>
+    @extend(name, value)
 
   use: (name) =>
     _(name.split(@DELIMETER)).inject (parent, child) ->
       parent[child]
-    , @namespace()
+    , hiddenNamespace
 
-  noConflict: ->
-    _(window).extend(originals)
+  noConflict: (dependencies = {}) ->
+    _ = dependencies._ if dependencies._?
+    _(root).extend(originals)
     return this
 
   #private
 
   extend: ->
-    @namespace().extend.apply(@, _(arguments).toArray())
-
-  namespace: _.memoize ->
-    _({}).tap (n) =>
-      @extendJs().myNamespace(n)
-
-  extendJs: _.memoize ->
-    extend.noConflict()
+    hiddenNamespace.extend.apply(@, _(arguments).toArray())
 
 root.defuse = new Defuse
-
-_(this).extend
-  def: defuse.def
-  use: defuse.use
+root.def = root.defuse.def
+root.use = root.defuse.use
