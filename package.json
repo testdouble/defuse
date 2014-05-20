@@ -7,7 +7,8 @@
     "name": "Justin Searls",
     "company": "Test Double, LLC"
   },
-  "dependencies": {
-    "lineman": "~0.11.2"
+  "devDependencies": {
+    "lineman": "^0.30.0",
+    "lineman-lib": "^0.2.0"
   }
 }
