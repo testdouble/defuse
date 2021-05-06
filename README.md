@@ -1,6 +1,6 @@
 # defuse.js
 
-[![Build Status](https://travis-ci.org/testdouble/defuse.png?branch=master)](https://travis-ci.org/testdouble/defuse)
+[![Build Status](https://travis-ci.org/testdouble/defuse.png?branch=main)](https://travis-ci.org/testdouble/defuse)
 
 defuse is a nifty little JavaScript library for folks who agree that it makes sense to avoid cluttering the global scope with application namespaces, but acknowledge that the various AMD/CommonJS libraries [may not be worth their cost](http://blog.testdouble.com/posts/2013-06-16-unrequired-love.html).
 
